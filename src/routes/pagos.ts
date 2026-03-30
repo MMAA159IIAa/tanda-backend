@@ -70,8 +70,8 @@ router.post('/real-charge', async (req, res) => {
                 aportacion_tanda: 0,
                 estado: 'pendiente_confirmacion',
                 metodo_pago: metodo_pago,
-                referencia_externa: mpIntent.id,
-                url_pago: mpIntent.transaction_details?.external_resource_url || mpIntent.transaction_details?.bank_transfer_id
+                referencia_externa: mpIntent.id?.toString(),
+                url_pago: mpIntent.transaction_details?.external_resource_url || mpIntent.transaction_details?.bank_transfer_id || null
             }
         });
 
