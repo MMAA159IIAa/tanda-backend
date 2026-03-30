@@ -177,8 +177,8 @@ router.post('/:id/create-intent', async (req, res) => {
             const user = await prisma.usuario.findUnique({ where: { id: usuario_id } });
             const mpPayment = await createMercadoPagoPayment(Number(monto), method, user?.email || 'user@test.com', `Aportación ${id}`);
             return res.json({ 
-                ticketUrl: mpPayment.transaction_details.external_resource_url, 
-                clabe: mpPayment.transaction_details.bank_transfer_id,
+                ticketUrl: mpPayment.transaction_details?.external_resource_url || null, 
+                clabe: mpPayment.transaction_details?.bank_transfer_id || null,
                 paymentId: mpPayment.id 
             });
         }
