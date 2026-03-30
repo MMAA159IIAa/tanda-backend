@@ -1,0 +1,15 @@
+services:
+  - type: web
+    name: tanda-confiable-api
+    env: node
+    buildCommand: npm install && npm run build
+    startCommand: npm start
+    envVars:
+      - key: DATABASE_URL
+        value: postgresql://postgres:1692MaRiA1992.@db.zrumscmnsbevqfpecwze.supabase.co:5432/postgres
+      - key: STRIPE_SECRET_KEY
+        value: sk_test_PON_TU_LLAVE_AL_DESPLEGAR
+      - key: MP_ACCESS_TOKEN
+        value: TEST-PON_TU_LLAVE_AL_DESPLEGAR
+      - key: FRONTEND_URL
+        value: * # Permite llamadas desde cualquier app

@@ -1,0 +1,75 @@
+generator client {
+  provider        = "prisma-client-js"
+  previewFeatures = ["driverAdapters"]
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model Usuario {
+  id                String         @id @default(uuid())
+  nombre            String
+  telefono          String         @unique
+  email             String         @unique
+  password          String
+  reputacion        Int            @default(50)
+  puntos            Int            @default(0)
+  nivel             String
+  codigo_invitacion String         @unique
+  referido_por      String?
+  tandas_activas    Int            @default(0)
+  pagos_puntuales   Int            @default(0)
+  pagos_tardios     Int            @default(0)
+  pagos             Pago[]
+  participaciones   Participante[]
+  tandas_creadas    Tanda[]        @relation("CreadorTanda")
+}
+
+model Tanda {
+  id                String         @id @default(uuid())
+  nombre            String
+  tipo              String
+  monto_semanal     Decimal
+  duracion_semanas  Int
+  total_integrantes Int            @default(10)
+  estado            String         @default("esperando")
+  fecha_inicio      DateTime?
+  creador_id        String
+  codigo_invitacion String         @unique
+  saldo_fondo       Decimal        @default(0)
+  pagos             Pago[]
+  participantes     Participante[]
+  creador           Usuario        @relation("CreadorTanda", fields: [creador_id], references: [id])
+}
+
+model Participante {
+  id               String  @id @default(uuid())
+  usuario_id       String
+  tanda_id         String
+  posicion_turno   Int?
+  estado           String  @default("activo")
+  deposito_inicial Boolean @default(false)
+  tanda            Tanda   @relation(fields: [tanda_id], references: [id])
+  usuario          Usuario @relation(fields: [usuario_id], references: [id])
+
+  @@unique([usuario_id, tanda_id])
+}
+
+model Pago {
+  id                  String   @id @default(uuid())
+  usuario_id          String
+  tanda_id            String
+  numero_semana       Int
+  monto               Decimal
+  fecha_pago          DateTime @default(now())
+  estado              String   @default("pendiente")
+  metodo_pago         String   @default("stripe")
+  comision_plataforma Decimal
+  fondo_seguridad     Decimal
+  aportacion_tanda    Decimal
+  referencia_externa  String?
+  url_pago            String?
+  tanda               Tanda    @relation(fields: [tanda_id], references: [id])
+  usuario             Usuario  @relation(fields: [usuario_id], references: [id])
+}
