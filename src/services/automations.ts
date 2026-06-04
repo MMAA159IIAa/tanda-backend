@@ -66,8 +66,27 @@ export const ejecutarCronDiario = async () => {
                 }
             }
         }
+        
+        // 4. MONITOREO DE SALUD DEL FONDO (NUEVO: AI ENGINEER MASTER)
+        await verificarSaludFondo(tanda);
     }
     console.log('[CRON] Fin de revision diaria.');
+};
+
+/**
+ * Verifica si el fondo de garantia tiene liquidez suficiente.
+ * Si el fondo baja del 20% del valor total de la tanda, lanza una alerta.
+ */
+const verificarSaludFondo = async (tanda: any) => {
+    const valorTotalTanda = tanda.monto_semanal * tanda.participantes.length;
+    const umbralCritico = valorTotalTanda * 0.20;
+
+    if (tanda.saldo_fondo < umbralCritico) {
+        console.log(`[ALERTA LIQUIDEZ] El fondo de ${tanda.nombre} esta en nivel critico ($${tanda.saldo_fondo}).`);
+        console.log(`[ACCION] Se recomienda inyectar capital o aumentar la comision temporalmente.`);
+        
+        // Aqui se podria integrar con un servicio de notificacion push o email
+    }
 };
 
 // Start simulating a cron job every 24 hours (86400000 ms)

@@ -1,4 +1,4 @@
-import { calculateSplit } from '../services/stripe';
+import { calculateSplit } from '../utils/commission';
 
 export const correrAuditoria = () => {
     console.log("==========================================");

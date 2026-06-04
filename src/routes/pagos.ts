@@ -1,6 +1,7 @@
 import { Router } from 'express';
 import { prisma } from '../services/prisma';
-import { createPaymentIntent, calculateSplit, transferPayout } from '../services/stripe';
+import { createPaymentIntent, transferPayout } from '../services/stripe';
+import { calculateSplit } from '../utils/commission';
 import { premiarUsuario } from '../services/reputacion';
 import { createMercadoPagoPayment } from '../services/mercadopago';
 
@@ -16,7 +17,7 @@ router.post('/real-charge', async (req, res) => {
     if (!user) return res.status(404).json({ error: 'User not found' });
 
     const paymentMonto = Number(monto);
-    const descripcion = `Aportación Semana ${numero_semana} en Tanda Confiable`;
+    const descripcion = `Aportación Semana ${numero_semana} en EsTuTanda`;
 
     // ------------------------------------------
     // CASO 1: TARJETA (STRIPE) -> Confirmación Inmediata

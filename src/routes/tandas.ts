@@ -1,6 +1,7 @@
 import { Router } from 'express';
 import { prisma } from '../services/prisma';
 import crypto from 'crypto';
+import { calculateSplit } from '../utils/commission';
 import { asignarTurnos } from '../services/turnos';
 
 const router = Router();
@@ -209,9 +210,10 @@ router.post('/:id/verify-payment', async (req, res) => {
         await prisma.participante.update({ where: { id: pRecord.id }, data: { estado: 'pagado' } });
 
         const montoNum = Number(monto);
-        const comision = montoNum * 0.05;
-        const fondo = montoNum * 0.02;
-        const aportacion = montoNum - comision - fondo;
+        const split = calculateSplit(montoNum);
+        const comision = split.plataformaComision;
+        const fondo = split.fondoProteccion;
+        const aportacion = split.tandaRecibe;
 
         await prisma.tanda.update({ where: { id }, data: { saldo_fondo: { increment: fondo } } });
 
@@ -339,6 +341,17 @@ router.get('/system/available', async (req, res) => {
     } catch (e) {
         res.status(500).json({ error: 'Server error' });
     }
+});
+
+router.get('/', async (req, res) => {
+  try {
+    const tandas = await prisma.tanda.findMany({
+      include: { participantes: { include: { usuario: true } } }
+    });
+    res.json(tandas);
+  } catch (e) {
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
 });
 
 export default router;

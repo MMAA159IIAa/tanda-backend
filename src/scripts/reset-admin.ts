@@ -20,7 +20,7 @@ async function main() {
     create: {
       nombre: 'Administrador',
       telefono,
-      email: 'admin@tandaconfiable.com',
+      email: 'admin@estutanda.com',
       password: hashPassword(newPass),
       codigo_invitacion: 'ADMIN-ROOT',
       nivel: 'premium'

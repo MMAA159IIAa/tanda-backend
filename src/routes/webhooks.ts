@@ -1,6 +1,6 @@
 import { Router } from 'express';
 import { prisma } from '../services/prisma';
-import { calculateSplit } from '../services/stripe'; 
+import { calculateSplit } from '../utils/commission';
 import { premiarUsuario } from '../services/reputacion';
 
 const router = Router();

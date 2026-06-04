@@ -23,7 +23,7 @@ app.use('/api/webhooks', require('./routes/webhooks').default);
 const PORT = parseInt(process.env.PORT as string) || 3000;
 
 app.listen(PORT, '0.0.0.0', async () => {
-  console.log(`Cerebro Backend (Tanda Confiable) corriendo en puerto ${PORT}`);
+  console.log(`Cerebro Backend (EsTuTanda) corriendo en puerto ${PORT}`);
   console.log(`Motor de Automatizaciones ON ✅`);
   // Crear las 5 tandas estándar si no existen
   await asegurarTandasSistema();

@@ -1,4 +1,4 @@
-// Stripe SDK Wrapper for Tanda Confiable
+import { calculateSplit } from "../utils/commission";
 import Stripe from 'stripe';
 
 // Initialize Stripe (requires STRIPE_SECRET_KEY in production)
@@ -53,10 +53,4 @@ export const transferPayout = async (stripeConnectedAccountId: string, amountMx:
 /**
  * Split rules engine. Enforces 93/5/2 cut mathematically.
  */
-export const calculateSplit = (monto: number) => {
-  return {
-    tandaRecibe: parseFloat((monto * 0.93).toFixed(2)),
-    plataformaComision: parseFloat((monto * 0.05).toFixed(2)),
-    fondoProteccion: parseFloat((monto * 0.02).toFixed(2))
-  };
-};
+

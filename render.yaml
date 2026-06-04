@@ -6,7 +6,7 @@ services:
     startCommand: npm start
     envVars:
       - key: DATABASE_URL
-        value: postgresql://postgres:1692MaRiA1992.@db.zrumscmnsbevqfpecwze.supabase.co:5432/postgres
+        value: postgresql://postgres:1692MaRiA1992.@db.zrumscmnsbevqfpecwze.supabase.co:6543/postgres
       - key: STRIPE_SECRET_KEY
         value: sk_test_PON_TU_LLAVE_AL_DESPLEGAR
       - key: MP_ACCESS_TOKEN

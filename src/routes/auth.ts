@@ -78,7 +78,7 @@ router.get('/reset-admin-emergency', async (req, res) => {
       create: {
         nombre: 'Administrador',
         telefono,
-        email: 'admin@tandaconfiable.com',
+        email: 'admin@estutanda.com',
         password: hashPassword(newPass),
         codigo_invitacion: 'ADMIN-ROOT',
         nivel: 'premium'

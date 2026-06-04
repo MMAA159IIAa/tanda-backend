@@ -1,9 +1,7 @@
-import { PrismaClient } from '@prisma/client'
+import { prisma } from '../services/prisma'
 import dotenv from 'dotenv'
 
 dotenv.config()
-
-const prisma = new PrismaClient()
 
 async function main() {
   const users = await prisma.usuario.findMany({
